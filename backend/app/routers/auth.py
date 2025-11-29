@@ -117,6 +117,7 @@ async def logout(token: str = Depends(oauth2_scheme), db: AsyncSession = Depends
 @limiter.limit("1/minute")
 async def request_verification_email(request: Request, current_user: schemas.User = Depends(get_current_user)):
     if current_user.is_email_verified:
+        
         logger.info(f"User {current_user.email} requested verification email, but email is already verified.")
         raise HTTPException(status_code=400, detail="Email is already verified")
     
